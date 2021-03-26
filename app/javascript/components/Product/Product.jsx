@@ -99,7 +99,10 @@ class Product extends React.Component {
               <h5 className="mb-2">Price: {formatNumber(product.price)}</h5>
             </div>
             <div className="col-sm-12 col-lg-2">
-              <ProductItemAddToCardBtn product={product}/>
+              {
+                this.context.isAuthorized() &&
+                <ProductItemAddToCardBtn product={product}/>
+              }
               {
                 this.context.isUserAdmin() &&
                 <button type="button" className="btn btn-danger btn-block" onClick={this.deleteProduct}>
