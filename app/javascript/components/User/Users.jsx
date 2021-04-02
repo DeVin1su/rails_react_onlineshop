@@ -10,7 +10,8 @@ class Users extends React.Component {
   }
 
   componentDidMount() {
-    const url = "/api/v1/users/index";
+    const url = "/api/v1/users";
+    // const url = "/api/v1/users/index";
     fetch(url)
       .then(response => {
       if (response.ok) {

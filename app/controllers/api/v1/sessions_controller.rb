@@ -1,22 +1,43 @@
-class Api::V1::SessionsController < ApplicationController
+class Api::V1::SessionsController < Devise::SessionsController
   def create
-    @user = User.find_by(login: params[:login])
-    if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.id
+    @user = User.find_by(email: params[:email])
+    return invalid_login_attempt unless @user
+
+    if @user.valid_password?(user_params[:password])
+      sign_in :user, @user
       render json: @user
     else
-      render json: @user.errors
+      invalid_login_attempt
     end
   end
 
-  def get
-    @current_user ||= User.find_by_id(session[:user_id]) if !!session[:user_id]
-
-    render json: @current_user
-  end
+  # def get
+  #   # if user_signed_in?
+  #   #   render json: current_user
+  #   # else
+  #   #   render json: {error: 'invalid login attempt'}, status: :unprocessable_entity
+  #   # end
+  #   render json: {error: 'olololol'}, status: :unprocessable_entity
+  # end
 
   def destroy
-    session.delete(:user_id)
-    render json: { message: 'Logout success!' }
+    # sign_out(@user)
+    # render json: { message: 'Logout success!' }
+    signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(@user))
+    render :json => {
+        'csrfParam' => request_forgery_protection_token,
+        'csrfToken' => form_authenticity_token
+    }
+  end
+
+  private
+
+  def invalid_login_attempt
+    warden.custom_failure!
+    render json: {error: 'invalid login attempt'}, status: :unprocessable_entity
+  end
+
+  def user_params
+    params.permit(:email, :password)
   end
 end

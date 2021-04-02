@@ -1,11 +1,11 @@
-class Api::V1::UsersController < ApplicationController
+class Api::V1::Users2Controller < ApplicationController
   def index
-    user = User.all.order(created_at: :desc)
+    user = User2.all.order(created_at: :desc)
     render json: user
   end
 
   def create
-    user = User.create!(user_params)
+    user = User2.create!(user_params)
     if user
       render json: user
     else
@@ -15,24 +15,19 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     if user
-
-      sign_out(user)
-
       if params.has_key?(:name)
         user.name = params[:name]
       end
       if params.has_key?(:surname)
         user.surname = params[:surname]
       end
-      if params.has_key?(:email)
-        user.email = params[:email]
+      if params.has_key?(:login)
+        user.login = params[:login]
       end
       if params.has_key?(:password)
         user.password = params[:password]
       end
       user.save
-
-      sign_in :user, user
 
       render json: user, include: ['role']
     else
@@ -56,10 +51,10 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:name, :surname, :email, :password, :role_id)
+    params.permit(:name, :surname, :login, :password, :role_id)
   end
   
   def user
-    @user ||= User.includes(:role).find(params[:id])
+    @user ||= User2.includes(:role).find(params[:id])
   end
 end

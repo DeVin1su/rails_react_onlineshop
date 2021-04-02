@@ -9,6 +9,7 @@ import Register from "../components/Account/Register";
 import Users from "../components/User/Users";
 import User from "../components/User/User";
 import NewUser from "../components/User/NewUser";
+import UpdUser from "../components/User/UpdUser";
 import NavBar from "../components/NavBar";
 import Cart from "../components/Cart/Cart";
 import Orders from "../components/Order/Orders";
@@ -25,6 +26,7 @@ export default (
       <Route path="/login" exact component={Login} />
       <Route path="/register" exact component={Register} />
       <Route path="/users" exact component={Users} />
+      <Route path="/user/update" exact component={UpdUser} />
       <Route path="/user/:id" exact component={User} />
       <Route path="/user" exact component={NewUser} />
       <Route path="/cart" exact component={Cart} />

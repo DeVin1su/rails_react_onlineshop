@@ -16,7 +16,8 @@ export class NavBarUser extends React.Component {
   }
   
   componentDidMount(){
-    const url = "/api/v1/login";
+    const url = "/api/v1/currentuser";
+    // const url = "api/v1/users/get";
     fetch(url)
       .then(response => {
       if (response.ok) {
@@ -50,7 +51,9 @@ export class NavBarUser extends React.Component {
       }
       throw new Error("Network response was not ok.");
     })
-    .then(() => {
+    .then(response => {
+      document.querySelector('meta[name="csrf-param"]').content = response.csrfParam;
+      document.querySelector('meta[name="csrf-token"]').content = response.csrfToken;
       this.context.setUser(null);
       this.setState({redirect: true});
       // this.props.history.push(`/`);

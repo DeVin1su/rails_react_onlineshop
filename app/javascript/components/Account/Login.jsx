@@ -9,7 +9,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      login: "",
+      email: "",
       password: ""
     };
 
@@ -29,13 +29,14 @@ class Login extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     const url = "/api/v1/login";
-    const { login, password } = this.state;
+    // const url = "/api/v1/login";
+    const { email, password } = this.state;
 
-    if (login.length == 0 || password.length == 0)
+    if (email.length == 0 || password.length == 0)
       return;
 
     const body = {
-      login,
+      email,
       password
     };
 
@@ -70,15 +71,15 @@ class Login extends React.Component {
         <div className="row">
           <div className="col-sm-12 col-lg-6 offset-lg-3">
             <h1 className="font-weight-normal mb-5">
-              Login
+              Email
             </h1>
             <form onSubmit={this.onSubmit}>
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
-                  type="text"
-                  name="login"
-                  id="login"
+                  type="email"
+                  name="email"
+                  id="email"
                   className="form-control"
                   required
                   onChange={this.onChange}

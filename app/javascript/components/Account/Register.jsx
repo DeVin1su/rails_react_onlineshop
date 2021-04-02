@@ -7,7 +7,7 @@ class Register extends React.Component {
     this.state = {
       name: "",
       surname: "",
-      login: "",
+      email: "",
       password: ""
     };
 
@@ -21,16 +21,17 @@ class Register extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const url = "/api/v1/users/create";
-    const { name, surname, login, password } = this.state;
+    // const url = "/api/v1/users";
+    const url = "/api/v1";
+    const { name, surname, email, password } = this.state;
 
-    if (name.length == 0 || surname.length == 0 || login.length == 0 || password.length == 0)
+    if (name.length == 0 || surname.length == 0 || email.length == 0 || password.length == 0)
       return;
 
     const body = {
       name,
       surname,
-      login,
+      email,
       password,
       role_id: 2
     };
@@ -86,11 +87,11 @@ class Register extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="login">Login</label>
+                <label htmlFor="email">Email</label>
                 <input
-                  type="text"
-                  name="login"
-                  id="login"
+                  type="email"
+                  name="email"
+                  id="email"
                   className="form-control"
                   required
                   onChange={this.onChange}

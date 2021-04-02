@@ -1,6 +1,16 @@
 class Api::V1::OrdersController < ApplicationController
   def index
-    order = Order.all.order(created_at: :desc)
+    # conditions = {}
+    order = Order
+
+    if params.has_key?(:user_id)
+      # conditions.user_id = params[:user_id]
+      order = order.where(:user_id => params[:user_id])
+    end
+
+    # order = Order.all.order(created_at: :desc)
+    # order = Order.find(:all, :conditions => {}})
+    order = order.all.order(created_at: :desc)
     render json: order, include: ['order_products', 'products', 'user']
   end
 

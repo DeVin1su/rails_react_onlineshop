@@ -19,7 +19,11 @@ function NavBar(props) {
             <Link to="/users" className="nav-item nav-link">Users</Link>
           }
           {
-            isUserAdmin() &&
+            isAuthorized() &&
+            <Link to="/user/update" className="nav-item nav-link">Update profile</Link>
+          }
+          {
+            isAuthorized() &&
             <Link to="/orders" className="nav-item nav-link">Orders</Link>
           }
         </div>

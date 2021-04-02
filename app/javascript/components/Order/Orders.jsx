@@ -2,8 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import OrderProductsItem from "./OrderProductsItem";
 import { formatNumber, formatDateTime } from '../../helpers/utils';
+import { UserContext } from "../../contexts/UserContextProvider";
 
 class Orders extends React.Component {
+  static contextType = UserContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +16,18 @@ class Orders extends React.Component {
 
   componentDidMount() {
     const url = "/api/v1/orders/index";
-    fetch(url)
+    let params = { };
+    if(this.context.isAuthorized() && !this.context.isUserAdmin()) {
+      params.user_id = this.context.user.id;
+    }
+
+    var esc = encodeURIComponent;
+    var query = Object.keys(params)
+        .map(k => esc(k) + '=' + esc(params[k]))
+        .join('&');
+    // Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+
+    fetch(url + '?' + query)
       .then(response => {
       if (response.ok) {
         return response.json();

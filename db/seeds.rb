@@ -24,10 +24,12 @@ rolaUser = Role.find_or_initialize_by(id: 2)
 rolaUser.name = 'Default user'
 rolaUser.save!
 
-user = User.find_or_initialize_by(login: 'admin')
+user = User.find_or_initialize_by(email: 'admin@q.q')
+# user = User.find_or_initialize_by(login: 'admin')
 user.name = 'Adminname'
 user.surname = 'Adminsurname'
-user.login = 'admin'
-user.password = 'admin'
+# user.login = 'admin'
+user.email = 'admin@q.q'
+user.password = 'qwerty'
 user.role_id = 1
 user.save!

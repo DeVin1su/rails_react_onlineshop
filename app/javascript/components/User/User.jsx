@@ -16,7 +16,8 @@ class User extends React.Component {
       }
     } = this.props;
 
-    const url = `/api/v1/users/show/${id}`;
+    const url = `/api/v1/users/${id}`;
+    // const url = `/api/v1/users/show/${id}`;
 
     fetch(url)
       .then(response => {
@@ -35,7 +36,8 @@ class User extends React.Component {
         params: { id }
       }
     } = this.props;
-    const url = `/api/v1/users/destroy/${id}`;
+    const url = `/api/v1/users/${id}`;
+    // const url = `/api/v1/users/destroy/${id}`;
     const token = document.querySelector('meta[name="csrf-token"]').content;
 
     fetch(url, {
